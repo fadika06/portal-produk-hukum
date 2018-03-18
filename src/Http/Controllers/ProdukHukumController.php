@@ -29,12 +29,12 @@ class ProdukHukumController extends Controller
      * @return void
      */
     protected $group_egovernmentModel;
-    protected $produk-hukum;
+    protected $produk_hukum;
     protected $user;
 
-    public function __construct(ProdukHukum $produk-hukum, GroupEgovernment $group_egovernment, User $user)
+    public function __construct(ProdukHukum $produk_hukum, GroupEgovernment $group_egovernment, User $user)
     {
-        $this->produk-hukum      = $produk-hukum;
+        $this->produk-hukum      = $produk_hukum;
         $this->group_egovernmentModel    = $group_egovernment;
         $this->user             = $user;
     }
@@ -102,12 +102,12 @@ class ProdukHukumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProdukHukum  $produk-hukum
+     * @param  \App\ProdukHukum  $produk_hukum
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $produk-hukum = $this->produk-hukum;
+        $produk_hukum = $this->produk-hukum;
 
         $validator = Validator::make($request->all(), [
             'group_egovernment_id' => 'required',
@@ -117,25 +117,25 @@ class ProdukHukumController extends Controller
         ]);
 
         if($validator->fails()){
-            $check = $produk-hukum->where('label',$request->label)->whereNull('deleted_at')->count();
+            $check = $produk_hukum->where('label',$request->label)->whereNull('deleted_at')->count();
 
             if ($check > 0) {
                 $response['message'] = 'Failed, label ' . $request->label . ' already exists';
             } else {
-                $produk-hukum->group_egovernment_id = $request->input('group_egovernment_id');
-                $produk-hukum->user_id = $request->input('user_id');
-                $produk-hukum->label = $request->input('label');
-                $produk-hukum->description = $request->input('description');
-                $produk-hukum->save();
+                $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+                $produk_hukum->user_id = $request->input('user_id');
+                $produk_hukum->label = $request->input('label');
+                $produk_hukum->description = $request->input('description');
+                $produk_hukum->save();
 
                 $response['message'] = 'success';
             }
         } else {
-            $produk-hukum->group_egovernment_id = $request->input('group_egovernment_id');
-            $produk-hukum->user_id = $request->input('user_id');
-            $produk-hukum->label = $request->input('label');
-            $produk-hukum->description = $request->input('description');
-            $produk-hukum->save();
+            $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+            $produk_hukum->user_id = $request->input('user_id');
+            $produk_hukum->label = $request->input('label');
+            $produk_hukum->description = $request->input('description');
+            $produk_hukum->save();
             $response['message'] = 'success';
         }
 
@@ -152,11 +152,11 @@ class ProdukHukumController extends Controller
      */
     public function show($id)
     {
-        $produk-hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk-hukum->findOrFail($id);
 
-        $response['produk-hukum'] = $produk-hukum;
-        $response['group_egovernment'] = $produk-hukum->group_egovernment;
-        $response['user'] = $produk-hukum->user;
+        $response['produk-hukum'] = $produk_hukum;
+        $response['group_egovernment'] = $produk_hukum->group_egovernment;
+        $response['user'] = $produk_hukum->user;
         $response['status'] = true;
 
         return response()->json($response);
@@ -165,18 +165,18 @@ class ProdukHukumController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProdukHukum  $produk-hukum
+     * @param  \App\ProdukHukum  $produk_hukum
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $produk-hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk-hukum->findOrFail($id);
 
-        array_set($produk-hukum->user, 'label', $produk-hukum->user->name);
+        array_set($produk_hukum->user, 'label', $produk_hukum->user->name);
 
-        $response['produk-hukum'] = $produk-hukum;
-        $response['group_egovernment'] = $produk-hukum->group_egovernment;
-        $response['user'] = $produk-hukum->user;
+        $response['produk-hukum'] = $produk_hukum;
+        $response['group_egovernment'] = $produk_hukum->group_egovernment;
+        $response['user'] = $produk_hukum->user;
         $response['status'] = true;
 
         return response()->json($response);
@@ -186,12 +186,12 @@ class ProdukHukumController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProdukHukum  $produk-hukum
+     * @param  \App\ProdukHukum  $produk_hukum
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $produk-hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk-hukum->findOrFail($id);
 
         if ($request->input('old_label') == $request->input('label'))
         {
@@ -211,25 +211,25 @@ class ProdukHukumController extends Controller
         }
 
         if ($validator->fails()) {
-            $check = $produk-hukum->where('label',$request->label)->whereNull('deleted_at')->count();
+            $check = $produk_hukum->where('label',$request->label)->whereNull('deleted_at')->count();
 
             if ($check > 0) {
                 $response['message'] = 'Failed, label ' . $request->label . ' already exists';
             } else {
-                $produk-hukum->label = $request->input('label');
-                $produk-hukum->description = $request->input('description');
-                $produk-hukum->group_egovernment_id = $request->input('group_egovernment_id');
-                $produk-hukum->user_id = $request->input('user_id');
-                $produk-hukum->save();
+                $produk_hukum->label = $request->input('label');
+                $produk_hukum->description = $request->input('description');
+                $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+                $produk_hukum->user_id = $request->input('user_id');
+                $produk_hukum->save();
 
                 $response['message'] = 'success';
             }
         } else {
-            $produk-hukum->label = $request->input('label');
-            $produk-hukum->description = $request->input('description');
-            $produk-hukum->group_egovernment_id = $request->input('group_egovernment_id');
-            $produk-hukum->user_id = $request->input('user_id');
-            $produk-hukum->save();
+            $produk_hukum->label = $request->input('label');
+            $produk_hukum->description = $request->input('description');
+            $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+            $produk_hukum->user_id = $request->input('user_id');
+            $produk_hukum->save();
 
             $response['message'] = 'success';
         }
@@ -242,14 +242,14 @@ class ProdukHukumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProdukHukum  $produk-hukum
+     * @param  \App\ProdukHukum  $produk_hukum
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $produk-hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk-hukum->findOrFail($id);
 
-        if ($produk-hukum->delete()) {
+        if ($produk_hukum->delete()) {
             $response['status'] = true;
         } else {
             $response['status'] = false;
