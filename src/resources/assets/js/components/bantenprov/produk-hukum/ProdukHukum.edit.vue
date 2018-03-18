@@ -87,9 +87,9 @@ export default {
       .then(response => {
         if (response.data.status == true) {
           this.model.user = response.data.user,
-          this.model.label = response.data.produk-hukum.label;
-          this.model.old_label = response.data.produk-hukum.label;
-          this.model.description = response.data.produk-hukum.description;
+          this.model.label = response.data.produk_hukum.label;
+          this.model.old_label = response.data.produk_hukum.label;
+          this.model.description = response.data.produk_hukum.description;
           this.model.group_egovernment = response.data.group_egovernment;
         } else {
           alert('Failed');
@@ -161,8 +161,8 @@ export default {
       axios.get('api/produk-hukum/' + this.$route.params.id + '/edit')
         .then(response => {
           if (response.data.status == true) {
-            this.model.label = response.data.produk-hukum.label;
-            this.model.description = response.data.produk-hukum.description;
+            this.model.label = response.data.produk_hukum.label;
+            this.model.description = response.data.produk_hukum.description;
           } else {
             alert('Failed');
           }
