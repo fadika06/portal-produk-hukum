@@ -12,7 +12,7 @@ class CreateProdukHukumsTable extends Migration
      */
 	public function up()
 	{
-		Schema::create('produk-hukums', function(Blueprint $table) {
+		Schema::create('produk_hukums', function(Blueprint $table) {
 			$table->increments('id');
 			$table->integer('user_id');
 			$table->integer('group_egovernment_id');
@@ -30,6 +30,6 @@ class CreateProdukHukumsTable extends Migration
      */
 	public function down()
 	{
-		Schema::drop('produk-hukums');
+		Schema::drop('produk_hukums');
 	}
 }

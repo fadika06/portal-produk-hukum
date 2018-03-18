@@ -112,7 +112,7 @@ class ProdukHukumController extends Controller
         $validator = Validator::make($request->all(), [
             'group_egovernment_id' => 'required',
             'user_id' => 'required',
-            'label' => 'required|max:16|unique:produk-hukums,label',
+            'label' => 'required|max:16|unique:produk_hukums,label',
             'description' => 'max:255',
         ]);
 
@@ -203,7 +203,7 @@ class ProdukHukumController extends Controller
             ]);
         } else {
             $validator = Validator::make($request->all(), [
-                'label' => 'required|max:16|unique:produk-hukums,label',
+                'label' => 'required|max:16|unique:produk_hukums,label',
                 'description' => 'max:255',
                 'group_egovernment_id' => 'required',
                 'user_id' => 'required',

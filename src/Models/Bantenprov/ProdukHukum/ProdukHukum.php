@@ -11,7 +11,7 @@ class ProdukHukum extends Model
 
     public $timestamps = true;
 
-    protected $table = 'produk-hukums';
+    protected $table = 'produk_hukums';
     protected $dates = [
         'deleted_at'
     ];

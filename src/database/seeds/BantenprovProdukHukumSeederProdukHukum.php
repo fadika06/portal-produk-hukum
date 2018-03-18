@@ -18,7 +18,7 @@ class BantenprovProdukHukumSeederProdukHukum extends Seeder
 	{
         Model::unguard();
 
-        $produk-hukums = (object) [
+        $produk_hukums = (object) [
             (object) [
                 'user_id' => '1',
                 'group_egovernment_id' => '1',
@@ -33,7 +33,7 @@ class BantenprovProdukHukumSeederProdukHukum extends Seeder
             ]
         ];
 
-        foreach ($produk-hukums as $produk-hukum) {
+        foreach ($produk_hukums as $produk-hukum) {
             $model = ProdukHukum::updateOrCreate(
                 [
                     'user_id' => $produk-hukum->user_id,
