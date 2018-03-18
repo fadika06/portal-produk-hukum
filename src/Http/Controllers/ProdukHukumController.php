@@ -34,7 +34,7 @@ class ProdukHukumController extends Controller
 
     public function __construct(ProdukHukum $produk_hukum, GroupEgovernment $group_egovernment, User $user)
     {
-        $this->produk-hukum      = $produk_hukum;
+        $this->produk_hukum      = $produk_hukum;
         $this->group_egovernmentModel    = $group_egovernment;
         $this->user             = $user;
     }
@@ -49,9 +49,9 @@ class ProdukHukumController extends Controller
         if (request()->has('sort')) {
             list($sortCol, $sortDir) = explode('|', request()->sort);
 
-            $query = $this->produk-hukum->orderBy($sortCol, $sortDir);
+            $query = $this->produk_hukum->orderBy($sortCol, $sortDir);
         } else {
-            $query = $this->produk-hukum->orderBy('id', 'asc');
+            $query = $this->produk_hukum->orderBy('id', 'asc');
         }
 
         if ($request->exists('filter')) {
@@ -107,7 +107,7 @@ class ProdukHukumController extends Controller
      */
     public function store(Request $request)
     {
-        $produk_hukum = $this->produk-hukum;
+        $produk_hukum = $this->produk_hukum;
 
         $validator = Validator::make($request->all(), [
             'group_egovernment_id' => 'required',
@@ -152,9 +152,9 @@ class ProdukHukumController extends Controller
      */
     public function show($id)
     {
-        $produk_hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk_hukum->findOrFail($id);
 
-        $response['produk-hukum'] = $produk_hukum;
+        $response['produk_hukum'] = $produk_hukum;
         $response['group_egovernment'] = $produk_hukum->group_egovernment;
         $response['user'] = $produk_hukum->user;
         $response['status'] = true;
@@ -170,11 +170,11 @@ class ProdukHukumController extends Controller
      */
     public function edit($id)
     {
-        $produk_hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk_hukum->findOrFail($id);
 
         array_set($produk_hukum->user, 'label', $produk_hukum->user->name);
 
-        $response['produk-hukum'] = $produk_hukum;
+        $response['produk_hukum'] = $produk_hukum;
         $response['group_egovernment'] = $produk_hukum->group_egovernment;
         $response['user'] = $produk_hukum->user;
         $response['status'] = true;
@@ -191,7 +191,7 @@ class ProdukHukumController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $produk_hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk_hukum->findOrFail($id);
 
         if ($request->input('old_label') == $request->input('label'))
         {
@@ -247,7 +247,7 @@ class ProdukHukumController extends Controller
      */
     public function destroy($id)
     {
-        $produk_hukum = $this->produk-hukum->findOrFail($id);
+        $produk_hukum = $this->produk_hukum->findOrFail($id);
 
         if ($produk_hukum->delete()) {
             $response['status'] = true;
