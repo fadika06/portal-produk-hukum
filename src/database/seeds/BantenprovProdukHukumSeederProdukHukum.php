@@ -33,13 +33,13 @@ class BantenprovProdukHukumSeederProdukHukum extends Seeder
             ]
         ];
 
-        foreach ($produk_hukums as $produk-hukum) {
+        foreach ($produk_hukums as $produk_hukum) {
             $model = ProdukHukum::updateOrCreate(
                 [
-                    'user_id' => $produk-hukum->user_id,
-                    'group_egovernment_id' => $produk-hukum->group_egovernment_id,
-                    'label' => $produk-hukum->label,
-                    'description' => $produk-hukum->description,
+                    'user_id' => $produk_hukum->user_id,
+                    'group_egovernment_id' => $produk_hukum->group_egovernment_id,
+                    'label' => $produk_hukum->label,
+                    'description' => $produk_hukum->description,
                 ]
             );
             $model->save();
