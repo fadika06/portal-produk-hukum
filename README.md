@@ -17,19 +17,19 @@ ProdukHukum
 - Development snapshot
 
 ```bash
-$ composer require bantenprov/produk-hukum:dev-master
+$ composer require bantenprov/portal-produk-hukum:dev-master
 ```
 
 - Latest release:
 
 ```bash
-$ composer require bantenprov/produk-hukum
+$ composer require bantenprov/portal-produk-hukum
 ```
 
 ### Download via github
 
 ```bash
-$ git clone https://github.com/bantenprov/produk-hukum.git
+$ git clone https://github.com/bantenprov/portal-produk-hukum.git
 ```
 
 #### Edit `config/app.php` :

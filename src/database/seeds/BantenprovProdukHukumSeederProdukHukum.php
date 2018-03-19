@@ -22,14 +22,16 @@ class BantenprovProdukHukumSeederProdukHukum extends Seeder
             (object) [
                 'user_id' => '1',
                 'group_egovernment_id' => '1',
+                'sector_egovernment_id' => '1',
                 'label' => 'GroupEgovernment 1',
                 'description' => 'GroupEgovernment satu'
             ],
             (object) [
                 'user_id' => '2',
                 'group_egovernment_id' => '2',
+                'sector_egovernment_id' => '2',
                 'label' => 'GroupEgovernment 2',
-                'description' => 'GroupEgovernment dua',
+                'description' => 'GroupEgovernment dua'
             ]
         ];
 
@@ -38,6 +40,7 @@ class BantenprovProdukHukumSeederProdukHukum extends Seeder
                 [
                     'user_id' => $produk_hukum->user_id,
                     'group_egovernment_id' => $produk_hukum->group_egovernment_id,
+                    'sector_egovernment_id' => $produk_hukum->sector_egovernment_id,
                     'label' => $produk_hukum->label,
                     'description' => $produk_hukum->description,
                 ]

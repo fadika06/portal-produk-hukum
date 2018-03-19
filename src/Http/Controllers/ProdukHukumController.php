@@ -10,6 +10,7 @@ use Bantenprov\BudgetAbsorption\Facades\ProdukHukumFacade;
 /* Models */
 use Bantenprov\ProdukHukum\Models\Bantenprov\ProdukHukum\ProdukHukum;
 use Bantenprov\GroupEgovernment\Models\Bantenprov\GroupEgovernment\GroupEgovernment;
+use Bantenprov\SectorEgovernment\Models\Bantenprov\SectorEgovernment\SectorEgovernment;
 use App\User;
 
 /* Etc */
@@ -29,13 +30,15 @@ class ProdukHukumController extends Controller
      * @return void
      */
     protected $group_egovernmentModel;
+    protected $sector_egovernment;
     protected $produk_hukum;
     protected $user;
 
-    public function __construct(ProdukHukum $produk_hukum, GroupEgovernment $group_egovernment, User $user)
+    public function __construct(ProdukHukum $produk_hukum, GroupEgovernment $group_egovernment, SectorEgovernment $sector_egovernment, User $user)
     {
         $this->produk_hukum      = $produk_hukum;
         $this->group_egovernmentModel    = $group_egovernment;
+        $this->sector_egovernment    = $sector_egovernment;
         $this->user             = $user;
     }
 
@@ -69,6 +72,10 @@ class ProdukHukumController extends Controller
             array_set($response->data, 'group_egovernment', $group_egovernment->group_egovernment->label);
         }
 
+        foreach($response as $sector_egovernment){
+            array_set($response->data, 'sector_egovernment', $sector_egovernment->sector_egovernment->label);
+        }
+
         foreach($response as $user){
             array_set($response->data, 'user', $user->user->name);
         }
@@ -86,6 +93,7 @@ class ProdukHukumController extends Controller
     public function create()
     {
         $group_egovernment = $this->group_egovernmentModel->all();
+        $sector_egovernment = $this->sector_egovernment->all();
         $users = $this->user->all();
 
         foreach($users as $user){
@@ -93,6 +101,7 @@ class ProdukHukumController extends Controller
         }
 
         $response['group_egovernment'] = $group_egovernment;
+        $response['sector_egovernment'] = $sector_egovernment;
         $response['user'] = $users;
         $response['status'] = true;
 
@@ -111,8 +120,9 @@ class ProdukHukumController extends Controller
 
         $validator = Validator::make($request->all(), [
             'group_egovernment_id' => 'required',
+            'sector_egovernment_id' => 'required',
             'user_id' => 'required',
-            'label' => 'required|max:16|unique:produk_hukums,label',
+            'label' => 'required|max:255|unique:produk_hukums,label',
             'description' => 'max:255',
         ]);
 
@@ -123,6 +133,7 @@ class ProdukHukumController extends Controller
                 $response['message'] = 'Failed, label ' . $request->label . ' already exists';
             } else {
                 $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+                $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
                 $produk_hukum->user_id = $request->input('user_id');
                 $produk_hukum->label = $request->input('label');
                 $produk_hukum->description = $request->input('description');
@@ -132,6 +143,7 @@ class ProdukHukumController extends Controller
             }
         } else {
             $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+            $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
             $produk_hukum->user_id = $request->input('user_id');
             $produk_hukum->label = $request->input('label');
             $produk_hukum->description = $request->input('description');
@@ -156,6 +168,7 @@ class ProdukHukumController extends Controller
 
         $response['produk_hukum'] = $produk_hukum;
         $response['group_egovernment'] = $produk_hukum->group_egovernment;
+        $response['sector_egovernment'] = $produk_hukum->sector_egovernment;
         $response['user'] = $produk_hukum->user;
         $response['status'] = true;
 
@@ -176,6 +189,7 @@ class ProdukHukumController extends Controller
 
         $response['produk_hukum'] = $produk_hukum;
         $response['group_egovernment'] = $produk_hukum->group_egovernment;
+        $response['sector_egovernment'] = $produk_hukum->sector_egovernment;
         $response['user'] = $produk_hukum->user;
         $response['status'] = true;
 
@@ -196,16 +210,18 @@ class ProdukHukumController extends Controller
         if ($request->input('old_label') == $request->input('label'))
         {
             $validator = Validator::make($request->all(), [
-                'label' => 'required|max:16',
+                'label' => 'required|max:255',
                 'description' => 'max:255',
                 'group_egovernment_id' => 'required',
+                'sector_egovernment_id' => 'required',
                 'user_id' => 'required',
             ]);
         } else {
             $validator = Validator::make($request->all(), [
-                'label' => 'required|max:16|unique:produk_hukums,label',
+                'label' => 'required|max:255|unique:produk_hukums,label',
                 'description' => 'max:255',
                 'group_egovernment_id' => 'required',
+                'sector_egovernment_id' => 'required',
                 'user_id' => 'required',
             ]);
         }
@@ -219,6 +235,7 @@ class ProdukHukumController extends Controller
                 $produk_hukum->label = $request->input('label');
                 $produk_hukum->description = $request->input('description');
                 $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+                $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
                 $produk_hukum->user_id = $request->input('user_id');
                 $produk_hukum->save();
 
@@ -228,6 +245,7 @@ class ProdukHukumController extends Controller
             $produk_hukum->label = $request->input('label');
             $produk_hukum->description = $request->input('description');
             $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
+            $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
             $produk_hukum->user_id = $request->input('user_id');
             $produk_hukum->save();
 
