@@ -124,6 +124,7 @@ class ProdukHukumController extends Controller
             'user_id' => 'required',
             'label' => 'required|max:255|unique:produk_hukums,label',
             'description' => 'max:255',
+            'link' => 'required',
         ]);
 
         if($validator->fails()){
@@ -137,6 +138,7 @@ class ProdukHukumController extends Controller
                 $produk_hukum->user_id = $request->input('user_id');
                 $produk_hukum->label = $request->input('label');
                 $produk_hukum->description = $request->input('description');
+                $produk_hukum->link = $request->input('link');
                 $produk_hukum->save();
 
                 $response['message'] = 'success';
@@ -146,6 +148,7 @@ class ProdukHukumController extends Controller
             $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
             $produk_hukum->user_id = $request->input('user_id');
             $produk_hukum->label = $request->input('label');
+            $produk_hukum->link = $request->input('link');
             $produk_hukum->description = $request->input('description');
             $produk_hukum->save();
             $response['message'] = 'success';
@@ -212,6 +215,7 @@ class ProdukHukumController extends Controller
             $validator = Validator::make($request->all(), [
                 'label' => 'required|max:255',
                 'description' => 'max:255',
+                'link' => 'max:255',
                 'group_egovernment_id' => 'required',
                 'sector_egovernment_id' => 'required',
                 'user_id' => 'required',
@@ -220,6 +224,7 @@ class ProdukHukumController extends Controller
             $validator = Validator::make($request->all(), [
                 'label' => 'required|max:255|unique:produk_hukums,label',
                 'description' => 'max:255',
+                'link' => 'max:255',
                 'group_egovernment_id' => 'required',
                 'sector_egovernment_id' => 'required',
                 'user_id' => 'required',
@@ -234,6 +239,7 @@ class ProdukHukumController extends Controller
             } else {
                 $produk_hukum->label = $request->input('label');
                 $produk_hukum->description = $request->input('description');
+                $produk_hukum->link = $request->input('link');
                 $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
                 $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
                 $produk_hukum->user_id = $request->input('user_id');
@@ -244,6 +250,7 @@ class ProdukHukumController extends Controller
         } else {
             $produk_hukum->label = $request->input('label');
             $produk_hukum->description = $request->input('description');
+            $produk_hukum->link = $request->input('link');
             $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
             $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
             $produk_hukum->user_id = $request->input('user_id');

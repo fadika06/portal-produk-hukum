@@ -27,6 +27,12 @@
         </div>
 
         <div class="form-row mt-4">
+          <div class="col-md">
+            <b>Link :</b> {{ model.link }}
+          </div>
+        </div>
+
+        <div class="form-row mt-4">
 					<div class="col-md">
 						<b>Username :</b> {{ model.user.name }}
 					</div>
@@ -58,6 +64,7 @@ export default {
           this.model.label = response.data.produk_hukum.label;
           this.model.old_label = response.data.produk_hukum.label;
           this.model.description = response.data.produk_hukum.description;
+          this.model.link = response.data.produk_hukum.link;
           this.model.group_egovernment = response.data.group_egovernment;
           this.model.sector_egovernment = response.data.sector_egovernment;
           this.model.user = response.data.user;
@@ -86,6 +93,7 @@ export default {
       model: {
         label: "",
         description: "",
+        link: "",
         user:"",
         group_egovernment: "",
         sector_egovernment: "",
@@ -104,6 +112,7 @@ export default {
         axios.put('api/produk-hukum/' + this.$route.params.id, {
             label: this.model.label,
             description: this.model.description,
+            link: this.model.link,
             old_label: this.model.old_label,
             group_egovernment_id: this.model.group_egovernment.id,
             sector_egovernment_id: this.model.sector_egovernment.id

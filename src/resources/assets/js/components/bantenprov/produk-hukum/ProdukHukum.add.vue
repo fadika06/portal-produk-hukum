@@ -40,6 +40,18 @@
         </div>
 
         <div class="form-row mt-4">
+          <div class="col-md">
+            <validate tag="div">
+              <input class="form-control" v-model="model.link" name="link" type="text" placeholder="Link">
+
+              <field-messages name="link" show="$invalid && $submitted" class="text-danger">
+                <small class="form-text text-success">Looks good!</small>
+              </field-messages>
+            </validate>
+          </div>
+        </div>
+
+        <div class="form-row mt-4">
 					<div class="col-md">
 						<validate tag="div">
 						<label for="user_id">Username</label>
@@ -120,6 +132,7 @@ export default {
         label: "",
         user: "",
         description: "",
+        link: "",
         group_egovernment: "",
         sector_egovernment: "",
       },
@@ -138,6 +151,7 @@ export default {
         axios.post('api/produk-hukum', {
             label: this.model.label,
             description: this.model.description,
+            link:        this.model.link,
             group_egovernment_id: this.model.group_egovernment.id,
             sector_egovernment_id: this.model.sector_egovernment.id,
             user_id: this.model.user.id
