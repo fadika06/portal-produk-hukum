@@ -40,6 +40,18 @@
         </div>
 
         <div class="form-row mt-4">
+          <div class="col-md">
+            <validate tag="div">
+              <input class="form-control" v-model="model.link" name="link" type="text" placeholder="link">
+
+              <field-messages name="link" show="$invalid && $submitted" class="text-danger">
+                <small class="form-text text-success">Looks good!</small>
+              </field-messages>
+            </validate>
+          </div>
+        </div>
+
+        <div class="form-row mt-4">
 					<div class="col-md">
 						<validate tag="div">
 						<label for="user_id">Username</label>
@@ -102,6 +114,7 @@ export default {
         if (response.data.status == true) {
           this.model.user = response.data.user,
           this.model.label = response.data.produk_hukum.label;
+          this.model.link = response.data.produk_hukum.link;
           this.model.old_label = response.data.produk_hukum.label;
           this.model.description = response.data.produk_hukum.description;
           this.model.group_egovernment = response.data.group_egovernment;
@@ -136,6 +149,7 @@ export default {
       state: {},
       model: {
         label: "",
+        link: "",
         user: "",
         description: "",
         group_egovernment: "",
@@ -155,6 +169,7 @@ export default {
       } else {
         axios.put('api/produk-hukum/' + this.$route.params.id, {
             label: this.model.label,
+            link: this.model.link,
             description: this.model.description,
             old_label: this.model.old_label,
             group_egovernment_id: this.model.group_egovernment.id,
@@ -183,6 +198,7 @@ export default {
         .then(response => {
           if (response.data.status == true) {
             this.model.label = response.data.produk_hukum.label;
+            this.model.link = response.data.produk_hukum.link;
             this.model.description = response.data.produk_hukum.description;
           } else {
             alert('Failed');

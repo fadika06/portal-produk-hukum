@@ -122,6 +122,12 @@ export default {
           titleClass: 'center aligned'
         },
         {
+          name: 'link',
+          title: 'Link',
+          sortField: 'link',
+          titleClass: 'center aligned'
+        },
+        {
           name: '__slot:actions',
           title: 'Actions',
           titleClass: 'center aligned',
