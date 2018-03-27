@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-header">
-      <i class="fa fa-table" aria-hidden="true"></i> Show produk-hukum {{ model.label }}
+      <i class="fa fa-table" aria-hidden="true"></i> {{ model.label }}
 
       <ul class="nav nav-pills card-header-pills pull-right">
         <li class="nav-item">
@@ -22,7 +22,7 @@
 
         <div class="form-row mt-4">
           <div class="col-md">
-            <b>Description :</b> {{ model.description }}
+            <b>Description :</b> {{ model.Description }}
           </div>
         </div>
 
@@ -31,12 +31,6 @@
             <b>Link :</b> {{ model.link }}
           </div>
         </div>
-
-        <div class="form-row mt-4">
-					<div class="col-md">
-						<b>Username :</b> {{ model.user.name }}
-					</div>
-				</div>
 
         <div class="form-row mt-4">
 					<div class="col-md">
@@ -52,6 +46,17 @@
 
       </vue-form>
     </div>
+     <div class="card-footer text-muted">
+        <div class="row">
+          <div class="col-md">
+            <b>Username :</b> {{ model.user.name }}
+          </div>
+          <div class="col-md">
+            <div class="col-md text-right">Dibuat : {{ model.created_at }}</div>
+            <div class="col-md text-right">Diperbaiki : {{ model.updated_at }}</div>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -61,13 +66,15 @@ export default {
     axios.get('api/produk-hukum/' + this.$route.params.id)
       .then(response => {
         if (response.data.status == true) {
-          this.model.label = response.data.produk_hukum.label;
-          this.model.old_label = response.data.produk_hukum.label;
-          this.model.description = response.data.produk_hukum.description;
-          this.model.link = response.data.produk_hukum.link;
-          this.model.group_egovernment = response.data.group_egovernment;
+          this.model.label              = response.data.produk_hukum.label;
+          this.model.old_label          = response.data.produk_hukum.label;
+          this.model.Description        = response.data.produk_hukum.description;
+          this.model.link               = response.data.produk_hukum.link;
+          this.model.group_egovernment  = response.data.group_egovernment;
           this.model.sector_egovernment = response.data.sector_egovernment;
-          this.model.user = response.data.user;
+          this.model.user               = response.data.user;
+          this.model.created_at         = response.data.produk_hukum.created_at;
+          this.model.updated_at         = response.data.produk_hukum.updated_at;
         } else {
           alert('Failed');
         }
@@ -91,12 +98,14 @@ export default {
     return {
       state: {},
       model: {
-        label: "",
-        description: "",
-        link: "",
-        user:"",
-        group_egovernment: "",
+        label:              "",
+        description:        "",
+        link:               "",
+        user:               "",
+        group_egovernment:  "",
         sector_egovernment: "",
+        created_at:         "",
+        updated_at:         "",
       },
       group_egovernment: [],
       sector_egovernment: []
