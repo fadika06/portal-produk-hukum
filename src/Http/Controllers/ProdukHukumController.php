@@ -66,9 +66,9 @@ class ProdukHukumController extends Controller
         }
 
         $perPage = request()->has('per_page') ? (int) request()->per_page : null;
-        $response = $query->paginate($perPage);
+        $response = $query->with('user')->with('group_egovernment')->with('sector_egovernment')->paginate($perPage);
 
-        foreach($response as $group_egovernment){
+/*        foreach($response as $group_egovernment){
             array_set($response->data, 'group_egovernment', $group_egovernment->group_egovernment->label);
         }
 
@@ -78,7 +78,7 @@ class ProdukHukumController extends Controller
 
         foreach($response as $user){
             array_set($response->data, 'user', $user->user->name);
-        }
+        }*/
 
         return response()->json($response)
             ->header('Access-Control-Allow-Origin', '*')
@@ -119,11 +119,12 @@ class ProdukHukumController extends Controller
         $produk_hukum = $this->produk_hukum;
 
         $validator = Validator::make($request->all(), [
-            'group_egovernment_id' => 'required',
+            'group_egovernment_id'  => 'required',
             'sector_egovernment_id' => 'required',
-            'user_id' => 'required',
-            'label' => 'required|max:255|unique:produk_hukums,label',
-            'description' => 'max:255',
+            'user_id'               => 'required',
+            'label'                 => 'required',
+            'description'           => 'required',
+            'link'                  => 'required',
         ]);
 
         if($validator->fails()){
@@ -132,21 +133,23 @@ class ProdukHukumController extends Controller
             if ($check > 0) {
                 $response['message'] = 'Failed, label ' . $request->label . ' already exists';
             } else {
-                $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
-                $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
-                $produk_hukum->user_id = $request->input('user_id');
-                $produk_hukum->label = $request->input('label');
-                $produk_hukum->description = $request->input('description');
+                $produk_hukum->group_egovernment_id     = $request->input('group_egovernment_id');
+                $produk_hukum->sector_egovernment_id    = $request->input('sector_egovernment_id');
+                $produk_hukum->user_id                  = $request->input('user_id');
+                $produk_hukum->label                    = $request->input('label');
+                $produk_hukum->description              = $request->input('description');
+                $produk_hukum->link                     = $request->input('link');
                 $produk_hukum->save();
 
                 $response['message'] = 'success';
             }
         } else {
-            $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
-            $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
-            $produk_hukum->user_id = $request->input('user_id');
-            $produk_hukum->label = $request->input('label');
-            $produk_hukum->description = $request->input('description');
+            $produk_hukum->group_egovernment_id         = $request->input('group_egovernment_id');
+            $produk_hukum->sector_egovernment_id        = $request->input('sector_egovernment_id');
+            $produk_hukum->user_id                      = $request->input('user_id');
+            $produk_hukum->label                        = $request->input('label');
+            $produk_hukum->link                         = $request->input('link');
+            $produk_hukum->description                  = $request->input('description');
             $produk_hukum->save();
             $response['message'] = 'success';
         }
@@ -204,53 +207,40 @@ class ProdukHukumController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+        $response = array();
+        $message  = array();
+
         $produk_hukum = $this->produk_hukum->findOrFail($id);
 
-        if ($request->input('old_label') == $request->input('label'))
-        {
             $validator = Validator::make($request->all(), [
-                'label' => 'required|max:255',
-                'description' => 'max:255',
-                'group_egovernment_id' => 'required',
+                'label'                 => 'required',
+                'description'           => 'required',
+                'link'                  => 'required',
+                'group_egovernment_id'  => 'required',
                 'sector_egovernment_id' => 'required',
-                'user_id' => 'required',
+                'user_id'               => 'required',
             ]);
-        } else {
-            $validator = Validator::make($request->all(), [
-                'label' => 'required|max:255|unique:produk_hukums,label',
-                'description' => 'max:255',
-                'group_egovernment_id' => 'required',
-                'sector_egovernment_id' => 'required',
-                'user_id' => 'required',
-            ]);
-        }
 
-        if ($validator->fails()) {
-            $check = $produk_hukum->where('label',$request->label)->whereNull('deleted_at')->count();
+            if($validator->fails()){
 
-            if ($check > 0) {
-                $response['message'] = 'Failed, label ' . $request->label . ' already exists';
+                foreach($validator->messages()->getMessages() as $key => $error){
+                    foreach($error AS $error_get) {
+                        array_push($message, $error_get. "\n");
+                    }                
+                } 
+                $response['message'] = $message;
             } else {
-                $produk_hukum->label = $request->input('label');
-                $produk_hukum->description = $request->input('description');
-                $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
-                $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
-                $produk_hukum->user_id = $request->input('user_id');
+                $produk_hukum->label                    = $request->input('label');
+                $produk_hukum->description              = $request->input('description');
+                $produk_hukum->link                     = $request->input('link');
+                $produk_hukum->group_egovernment_id     = $request->input('group_egovernment_id');
+                $produk_hukum->sector_egovernment_id    = $request->input('sector_egovernment_id');
+                $produk_hukum->user_id                  = $request->input('user_id');
                 $produk_hukum->save();
 
                 $response['message'] = 'success';
             }
-        } else {
-            $produk_hukum->label = $request->input('label');
-            $produk_hukum->description = $request->input('description');
-            $produk_hukum->group_egovernment_id = $request->input('group_egovernment_id');
-            $produk_hukum->sector_egovernment_id = $request->input('sector_egovernment_id');
-            $produk_hukum->user_id = $request->input('user_id');
-            $produk_hukum->save();
-
-            $response['message'] = 'success';
-        }
 
         $response['status'] = true;
 
